@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bug Hunt - Sincronização de Assentos</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Courier New', monospace; 
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .header {
+      text-align: center;
+      border: 3px solid #FF6D00;
+      padding: 1rem;
+      background: #FFE0B2;
+      border-radius: 0;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #E65100;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .header p {
+      font-size: 11px;
+      color: #BF360C;
+      margin-top: 0.5rem;
+    }
+
+    .scenario-box {
+      border: 2px solid #FF9800;
+      background: #FFF3E0;
+      padding: 1rem;
+      border-radius: 0;
+    }
+
+    .scenario-box h2 {
+      color: #E65100;
+      font-size: 13px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .scenario-box p {
+      color: #BF360C;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .error-box {
+      border: 2px solid #F44336;
+      background: #FFEBEE;
+      padding: 1rem;
+      border-radius: 0;
+    }
+
+    .error-box h3 {
+      color: #C62828;
+      font-size: 12px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .error-box p {
+      color: #D32F2F;
+      font-size: 11px;
+      font-family: 'Courier New', monospace;
+      line-height: 1.4;
+      margin-bottom: 0.3rem;
+    }
+
+    .evidence {
+      border-left: 3px solid #FF6D00;
+      background: #FFFE5E;
+      padding: 0.8rem;
+      margin-top: 1rem;
+      font-size: 11px;
+      color: #333;
+    }
+
+    .evidence strong {
+      color: #E65100;
+    }
+
+    .timer {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      color: #D32F2F;
+      padding: 1rem;
+      border: 2px dashed #D32F2F;
+      background: #FFF3E0;
+      text-transform: uppercase;
+    }
+
+    .suspects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+
+    .suspect {
+      border: 2px solid #666;
+      padding: 1rem;
+      background: #F5F5F5;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 0;
+    }
+
+    .suspect:hover {
+      background: #E0E0E0;
+      border-color: #FF6D00;
+      transform: scale(1.05);
+    }
+
+    .suspect.selected {
+      background: #FFE0B2;
+      border-color: #E65100;
+      border-width: 3px;
+    }
+
+    .suspect h3 {
+      font-size: 12px;
+      margin-bottom: 0.5rem;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+
+    .suspect-icon {
+      font-size: 32px;
+      margin: 0.5rem 0;
+    }
+
+    .clue {
+      font-size: 11px;
+      color: #666;
+      margin-top: 0.5rem;
+      line-height: 1.4;
+      cursor: help;
+    }
+
+    .clue.show {
+      background: #E1F5FE;
+      padding: 0.5rem;
+      color: #01579B;
+      font-style: normal;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      font-weight: bold;
+      border: 2px solid #333;
+      background: #FFB74D;
+      color: #E65100;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 0;
+      transition: all 0.1s;
+    }
+
+    button:hover:not(:disabled) {
+      background: #FFA726;
+      transform: scale(1.05);
+    }
+
+    button:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .button-reset {
+      background: #81C784;
+      color: #1B5E20;
+    }
+
+    .button-reset:hover:not(:disabled) {
+      background: #66BB6A;
+    }
+
+    .result {
+      border: 3px solid #4CAF50;
+      background: #E8F5E9;
+      padding: 1.5rem;
+      text-align: center;
+      border-radius: 0;
+      display: none;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result h2 {
+      color: #2E7D32;
+      font-size: 18px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .result p {
+      color: #1B5E20;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    .result code {
+      background: #C8E6C9;
+      padding: 2px 4px;
+      font-size: 11px;
+      display: block;
+      margin: 0.5rem 0;
+      text-align: center;
+    }
+
+    .result.wrong {
+      border-color: #F44336;
+      background: #FFEBEE;
+    }
+
+    .result.wrong h2 {
+      color: #C62828;
+    }
+
+    .result.wrong p {
+      color: #B71C1C;
+    }
+
+    .info-box {
+      background: #E3F2FD;
+      border-left: 4px solid #1976D2;
+      padding: 1rem;
+      font-size: 12px;
+      color: #0D47A1;
+      line-height: 1.5;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat {
+      background: #F5F5F5;
+      border: 1px solid #CCC;
+      padding: 0.8rem;
+      font-size: 11px;
+    }
+
+    .stat strong {
+      color: #FF6D00;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 10px;
+      color: #999;
+      margin-top: 2rem;
+      border-top: 1px solid #DDD;
+      padding-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>🔍 DEBUG INVESTIGATION</h1>
+    <p>Falha Crítica em Sincronização de Assentos</p>
+  </div>
+
+  <div class="scenario-box">
+    <h2>📋 CENÁRIO DO INCIDENTE</h2>
+    <p>
+      Sexta-feira 14h: Sistema de venda de passagens reporta anomalia.<br/>
+      <strong>Sintoma:</strong> Usuários conseguem comprar o MESMO assento duas vezes.<br/>
+      <strong>Impacto:</strong> Múltiplas reservas duplicadas no mesmo banco de dados.<br/>
+      <strong>Status:</strong> Crítico — 47 conflitos detectados em 23 minutos.
+    </p>
+  </div>
+
+  <div class="error-box">
+    <h3>⚠️ RELATÓRIO DE ERRO</h3>
+    <p>Exception: Concurrent reservation conflict detected</p>
+    <p>Timestamp: 2026-09-17T14:23:45.123Z</p>
+    <p>Route: POST /api/reserves/seat</p>
+    <p>Seat ID: [varies] | Status: CONFLICT | HttpCode: 409</p>
+    
+    <div class="evidence">
+      <strong>📊 Evidência Coletada:</strong><br/>
+      Dois usuários distintos (userA, userB) completaram a transação no mesmo assento com 87ms de diferença. 
+      Ambos receberam status HTTP 200 (SUCCESS). Logs mostram: userA commit @ 14:23:44.501Z, userB commit @ 14:23:44.588Z.
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat">
+      <strong>Duplicatas Encontradas</strong>
+      47 assentos
+    </div>
+    <div class="stat">
+      <strong>Janela de Conflito</strong>
+      ~100ms entre transações
+    </div>
+  </div>
+
+  <div class="timer">
+    ⏱️ Tempo disponível: <span id="timeLeft">10:00</span>
+  </div>
+
+  <div class="info-box">
+    <strong>🎯 Sua Missão:</strong> Identifique a causa raiz entre os 4 suspeitos. Clique em cada um para ver a evidência técnica. Qual é o verdadeiro culpado?
+  </div>
+
+  <div class="suspects-grid" id="suspectsContainer">
+    <!-- Será preenchido por JS -->
+  </div>
+
+  <div class="button-group">
+    <button id="submitBtn" onclick="submitGuess()">ENVIAR HIPÓTESE</button>
+    <button class="button-reset" onclick="resetGame()">RECOMEÇAR</button>
+  </div>
+
+  <div class="result" id="resultBox"></div>
+
+  <div class="footer">
+    <p>🎮 Bug Hunt - Um jogo de investigação de bugs para times de desenvolvimento</p>
+    <p>Criado para quebra-gelo e learning de engenharia</p>
+  </div>
+</div>
+
+<script>
+const suspects = [
+  {
+    id: 1,
+    name: "Cache Desatualizado",
+    icon: "💾",
+    clue: "Redis com TTL errado: retorna assento como 'disponível' após venda, causando race condition de 100ms",
+    explanation: "Parece plausível, mas o log mostrava ambas as transações confirmadas no DB ao mesmo tempo.",
+    isCorrect: false
+  },
+  {
+    id: 2,
+    name: "Falta de Idempotência",
+    icon: "🔄",
+    clue: "API não validando token de idempotência — requisição duplicada (POST duas vezes) cria duas reservas",
+    explanation: "Possível, mas testador confirmou apenas UMA requisição por usuário. Não é duplicação client.",
+    isCorrect: false
+  },
+  {
+    id: 3,
+    name: "Lock de DB Não Liberado",
+    icon: "🔓",
+    clue: "Transação SELECT-THEN-UPDATE sem LOCK ... FOR UPDATE. Dois clientes leem 'disponível' simultaneamente, ambos atualizam.",
+    explanation: "BINGO! O código estava fazendo:\nSELECT status FROM assentos WHERE id=X\nseguido de:\nUPDATE assentos SET usuario=Y WHERE id=X\n\nSem o LOCK exclusivo, na janela entre SELECT e UPDATE, outro cliente entra e faz o mesmo.",
+    isCorrect: true
+  },
+  {
+    id: 4,
+    name: "Sincronização RPC Lenta",
+    icon: "📡",
+    clue: "Microserviço de assentos respondendo lento (SLA 500ms), causando timeout e retry automático",
+    explanation: "Logs mostram resposta consistente em 45ms. A latência não é o problema aqui.",
+    isCorrect: false
+  }
+];
+
+let selectedSuspect = null;
+let gameTime = 600;
+let gameActive = true;
+let timerInterval = null;
+
+function initGame() {
+  renderSuspects();
+  startTimer();
+}
+
+function renderSuspects() {
+  const container = document.getElementById('suspectsContainer');
+  container.innerHTML = suspects.map(suspect => `
+    <div class="suspect" id="suspect-${suspect.id}" onclick="selectSuspect(${suspect.id})">
+      <div class="suspect-icon">${suspect.icon}</div>
+      <h3>${suspect.name}</h3>
+      <div class="clue" id="clue-${suspect.id}">Clique para revelar evidência</div>
+    </div>
+  `).join('');
+}
+
+function selectSuspect(id) {
+  if (!gameActive) return;
+  
+  selectedSuspect = id;
+  
+  document.querySelectorAll('.suspect').forEach(s => s.classList.remove('selected'));
+  
+  const el = document.getElementById(`suspect-${id}`);
+  el.classList.add('selected');
+  
+  const clueEl = document.getElementById(`clue-${id}`);
+  const suspect = suspects.find(s => s.id === id);
+  clueEl.innerHTML = suspect.clue;
+  clueEl.classList.add('show');
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    gameTime--;
+    const mins = Math.floor(gameTime / 60);
+    const secs = gameTime % 60;
+    document.getElementById('timeLeft').textContent = 
+      `${mins}:${secs.toString().padStart(2, '0')}`;
+    
+    if (gameTime <= 0) {
+      endGame(false, 'TEMPO ESGOTADO! A investigação foi interrompida pela gerência.');
+    }
+  }, 1000);
+}
+
+function submitGuess() {
+  if (!gameActive) return;
+  if (!selectedSuspect) {
+    alert('Selecione um suspeito antes de enviar sua hipótese!');
+    return;
+  }
+  
+  const suspect = suspects.find(s => s.id === selectedSuspect);
+  if (suspect.isCorrect) {
+    endGame(true, 
+      `✅ CORRETO! CAUSA RAIZ IDENTIFICADA!\n\n` +
+      `Bug: ${suspect.name}\n\n` +
+      `${suspect.explanation}\n\n` +
+      `FIX: Adicionar SELECT ... FOR UPDATE na transação para criar lock exclusivo:\n` +
+      `SELECT status FROM assentos WHERE id=X FOR UPDATE\n\n` +
+      `Isso garante que apenas uma transação pode ler/atualizar o assento por vez.`
+    );
+  } else {
+    endGame(false, 
+      `❌ HIPÓTESE INCORRETA\n\n` +
+      `Sua escolha: ${suspect.name}\n\n` +
+      `Por quê está errada:\n${suspect.explanation}\n\n` +
+      `Tente novamente! O verdadeiro culpado é o "Lock de DB Não Liberado".`
+    );
+  }
+}
+
+function endGame(won, message) {
+  gameActive = false;
+  clearInterval(timerInterval);
+  
+  const resultEl = document.getElementById('resultBox');
+  resultEl.classList.add('show');
+  if (!won) resultEl.classList.add('wrong');
+  
+  const lines = message.split('\n');
+  let html = '';
+  
+  lines.forEach(line => {
+    if (line.startsWith('✅') || line.startsWith('❌')) {
+      html += `<h2>${line}</h2>`;
+    } else if (line.startsWith('SELECT') || line.startsWith('UPDATE')) {
+      html += `<code>${line}</code>`;
+    } else if (line.trim()) {
+      html += `<p>${line}</p>`;
+    }
+  });
+  
+  resultEl.innerHTML = html;
+  document.getElementById('submitBtn').disabled = true;
+}
+
+function resetGame() {
+  gameTime = 600;
+  gameActive = true;
+  selectedSuspect = null;
+  
+  clearInterval(timerInterval);
+  timerInterval = null;
+  
+  document.getElementById('resultBox').classList.remove('show', 'wrong');
+  document.getElementById('resultBox').innerHTML = '';
+  document.getElementById('submitBtn').disabled = false;
+  
+  document.querySelectorAll('.suspect').forEach(s => {
+    s.classList.remove('selected');
+    const clueEl = s.querySelector('.clue');
+    clueEl.textContent = 'Clique para revelar evidência';
+    clueEl.classList.remove('show');
+  });
+  
+  initGame();
+}
+
+initGame();
+</script>
+
+</body>
+</html>
