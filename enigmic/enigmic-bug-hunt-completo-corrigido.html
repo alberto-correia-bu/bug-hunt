@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enigmic: Bug Hunt - Quebra-Cabeça de Investigação</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Courier New', monospace; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .game-section.active {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .game-section.active .grid-container {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1976D2 0%, #FF6D00 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 2rem;
+    }
+
+    .game-section.active .content {
+      padding: 0;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section h2 {
+      color: #1976D2;
+      margin-bottom: 1.5rem;
+      font-size: 20px;
+      text-transform: uppercase;
+      border-bottom: 2px solid #FF6D00;
+      padding-bottom: 0.5rem;
+    }
+
+    .tutorial-step {
+      margin-bottom: 2rem;
+      background: #F5F5F5;
+      padding: 1.5rem;
+      border-left: 4px solid #FF6D00;
+    }
+
+    .tutorial-step h3 {
+      color: #E65100;
+      margin-bottom: 1rem;
+      font-size: 14px;
+    }
+
+    .tutorial-step p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    .example-grid {
+      background: white;
+      border: 2px solid #999;
+      display: inline-grid;
+      margin: 1rem 0;
+      padding: 8px;
+    }
+
+    .example-cell {
+      width: 50px;
+      height: 50px;
+      border: 1px solid #CCC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .example-header {
+      background: #1976D2;
+      color: white;
+      font-size: 10px;
+      padding: 4px;
+      text-align: center;
+    }
+
+    .example-yes { background: #4CAF50; color: white; }
+    .example-no { background: #F44336; color: white; }
+    .example-maybe { background: #FFC107; color: #333; }
+    .example-empty { background: #f9f9f9; }
+
+    .rules-list {
+      background: white;
+      border: 1px solid #DDD;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+
+    .rules-list li {
+      margin-bottom: 1rem;
+      font-size: 13px;
+      line-height: 1.6;
+      list-position: inside;
+    }
+
+    .rules-list li strong {
+      color: #1976D2;
+    }
+
+    .scenario-box {
+      background: #E3F2FD;
+      border-left: 4px solid #1976D2;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+
+    .scenario-box p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #0D47A1;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      padding: 1.5rem 2rem;
+      background: white;
+      border-top: 1px solid #DDD;
+      flex-wrap: wrap;
+      margin-top: 0;
+    }
+
+    .game-section .nav-buttons {
+      justify-content: center;
+    }
+
+    button {
+      padding: 0.85rem 2rem;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      font-weight: bold;
+      border: 2px solid #333;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.1s;
+      border-radius: 4px;
+    }
+
+    .btn-primary {
+      background: #1976D2;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1565C0;
+      transform: scale(1.05);
+    }
+
+    .btn-success {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #45a049;
+      transform: scale(1.05);
+    }
+
+    .btn-orange {
+      background: #FF6D00;
+      color: white;
+    }
+
+    .btn-orange:hover {
+      background: #E65100;
+      transform: scale(1.05);
+    }
+
+    .btn-secondary {
+      background: #9E9E9E;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #757575;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .progress-bar {
+      background: #E0E0E0;
+      height: 8px;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, #1976D2, #FF6D00);
+      height: 100%;
+      transition: width 0.3s;
+    }
+
+    .game-section {
+      display: none;
+      flex-direction: column;
+    }
+
+    .game-section.active {
+      display: flex;
+      flex: 1;
+    }
+
+    .game-section .content {
+      padding: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .timer {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #D32F2F;
+      padding: 1.5rem;
+      border-bottom: 2px solid #D32F2F;
+      background: linear-gradient(135deg, #FFF3E0, #FFECB3);
+      margin: 0;
+    }
+
+    .grid-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0;
+      min-height: 900px;
+      background: #f0f0f0;
+      padding: 4rem 2rem;
+      border-radius: 0;
+    }
+
+    .grid {
+      display: inline-grid;
+      border: 4px solid #333;
+      background: white;
+      gap: 0;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    .cell {
+      border: 1px solid #999;
+      padding: 18px;
+      width: 220px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.1s;
+      font-weight: bold;
+      font-size: 15px;
+      text-align: center;
+      word-break: break-word;
+      white-space: normal;
+      overflow: visible;
+      line-height: 1.5;
+    }
+
+    .cell:hover:not(.header-col):not(.header-row):not(.empty) {
+      background: #FFFACD;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.15);
+      transform: scale(1.02);
+    }
+
+    .cell.header-col {
+      background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: default;
+      padding: 18px;
+      text-align: center;
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: break-word;
+      white-space: normal;
+    }
+
+    .cell.header-row {
+      background: linear-gradient(135deg, #E65100 0%, #FF6D00 100%);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: default;
+      padding: 18px;
+      text-align: center;
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: break-word;
+      white-space: normal;
+    }
+
+    .cell.empty {
+      cursor: default;
+      background: #f9f9f9;
+    }
+
+    .cell.yes {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .cell.no {
+      background: #F44336;
+      color: white;
+    }
+
+    .cell.maybe {
+      background: #FFC107;
+      color: #333;
+    }
+
+    .legend {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      padding: 1rem 2rem;
+      background: white;
+      border-bottom: 1px solid #DDD;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .legend-box {
+      width: 28px;
+      height: 28px;
+      border: 2px solid #999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      border-radius: 3px;
+      font-size: 16px;
+    }
+
+    .yes-box { background: #4CAF50; color: white; }
+    .no-box { background: #F44336; color: white; }
+    .maybe-box { background: #FFC107; color: #333; }
+
+    .result {
+      display: none;
+      background: #E8F5E9;
+      border: 2px solid #4CAF50;
+      padding: 2rem;
+      margin-top: 2rem;
+      text-align: center;
+      border-radius: 4px;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result h2 {
+      color: #2E7D32;
+      font-size: 20px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .result p {
+      color: #1B5E20;
+      font-size: 12px;
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    .result code {
+      background: #C8E6C9;
+      padding: 6px 10px;
+      display: block;
+      margin: 1rem 0;
+      text-align: center;
+      border-radius: 3px;
+    }
+
+    .result.wrong {
+      background: #FFEBEE;
+      border-color: #F44336;
+    }
+
+    .result.wrong h2 {
+      color: #C62828;
+    }
+
+    .result.wrong p {
+      color: #B71C1C;
+      text-align: center;
+    }
+
+    .tips-box {
+      background: #FFF3E0;
+      border-left: 4px solid #FF6D00;
+      padding: 0.75rem 1rem;
+      margin: 0;
+      border-radius: 0;
+      font-size: 12px;
+      color: #E65100;
+      line-height: 1.5;
+    }
+
+    .tips-box strong {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 13px;
+    }
+
+    .game-section .tips-box {
+      border-radius: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>🔍 Enigmic: Bug Hunt</h1>
+    <p>Resolva o quebra-cabeça e identifique a causa raiz do bug</p>
+  </div>
+
+  <div class="content">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar" style="width: 0%;"></div>
+    </div>
+
+    <!-- SEÇÃO TUTORIAL -->
+    <div class="section active" id="tutorial">
+      <!-- Passo 1: Bem-vindo -->
+      <div class="tutorial-step" id="step1">
+        <h3>📖 Bem-vindo ao Enigmic: Bug Hunt!</h3>
+        <p>
+          Este é um jogo colaborativo de investigação de bugs. Seu time precisa usar a lógica 
+          dedutiva para descobrir qual é a <strong>verdadeira causa raiz</strong> analisando as evidências.
+        </p>
+        <p>
+          Cada jogador tem um papel importante na decodificação do puzzle. Vocês trabalham juntos 
+          para marcar as pistas e eliminar as impossibilidades.
+        </p>
+        <div class="scenario-box">
+          <p><strong>Cenário:</strong> Sistema de venda de passagens reporta anomalia crítica.</p>
+          <p><strong>Sintoma:</strong> Usuários conseguem comprar o MESMO assento duas vezes.</p>
+          <p><strong>Impacto:</strong> 47 conflitos detectados em 23 minutos.</p>
+          <p><strong>Sua missão:</strong> Deduzir qual é a causa raiz analisando os sintomas.</p>
+        </div>
+      </div>
+
+      <!-- Passo 2: Como Funciona -->
+      <div class="tutorial-step" id="step2" style="display: none;">
+        <h3>🎮 Como o Puzzle Funciona</h3>
+        <p>
+          O puzzle é uma <strong>matriz de sintomas vs causas</strong>. Você vai preencher as células 
+          marcando se acha que cada causa pode ter gerado cada sintoma.
+        </p>
+
+        <p><strong>Linhas = Sintomas observados (evidências)</strong></p>
+        <ul style="list-style: none; margin-left: 20px;">
+          <li>✓ Ambos usuários recebem HTTP 200 OK</li>
+          <li>✓ Janela de 100ms entre transações</li>
+          <li>✓ Dois assentos iguais foram vendidos</li>
+          <li>✓ Logs mostram dois commits simultâneos</li>
+        </ul>
+
+        <p style="margin-top: 1rem;"><strong>Colunas = Possíveis Causas (suspeitos)</strong></p>
+        <ul style="list-style: none; margin-left: 20px;">
+          <li>▶ Lock de DB Não Liberado</li>
+          <li>▶ Cache Desatualizado</li>
+          <li>▶ Falta de Idempotência</li>
+          <li>▶ Sincronização RPC Lenta</li>
+        </ul>
+
+        <p style="margin-top: 1.5rem;">
+          <strong>Cruzando os dados:</strong> Você marca cada célula indicando se AQUELE sintoma 
+          aponta para AQUELA causa.
+        </p>
+      </div>
+
+      <!-- Passo 3: Os Três Estados -->
+      <div class="tutorial-step" id="step3" style="display: none;">
+        <h3>✓ ✗ ? Os Três Estados</h3>
+        <p>Cada célula do puzzle pode estar em um de três estados:</p>
+
+        <div style="margin: 1.5rem 0;">
+          <p style="margin-bottom: 0.5rem;"><strong style="color: #4CAF50;">✓ SIM</strong> — Esta causa provavelmente gera este sintoma</p>
+          <p style="margin-bottom: 0.5rem;"><strong style="color: #F44336;">✗ NÃO</strong> — Esta causa NÃO pode gerar este sintoma (eliminada)</p>
+          <p style="margin-bottom: 0.5rem;"><strong style="color: #FFC107;">? TALVEZ</strong> — Ainda não tem certeza, precisa mais informação</p>
+        </div>
+
+        <p style="margin-top: 1.5rem;">Veja um exemplo:</p>
+        <div class="example-grid" style="grid-template-columns: repeat(4, 50px);">
+          <div class="example-cell example-empty"></div>
+          <div class="example-cell example-header">Causa A</div>
+          <div class="example-cell example-header">Causa B</div>
+          <div class="example-cell example-header">Causa C</div>
+          
+          <div class="example-cell example-header">Sintoma 1</div>
+          <div class="example-cell example-yes">✓</div>
+          <div class="example-cell example-no">✗</div>
+          <div class="example-cell example-maybe">?</div>
+        </div>
+        <p style="font-size: 11px; margin-top: 0.5rem; color: #666;">
+          Interpretação: Sintoma 1 aponta para Causa A (✓), descarta Causa B (✗) e Causa C ainda é incerta (?)
+        </p>
+      </div>
+
+      <!-- Passo 4: Regras de Lógica -->
+      <div class="tutorial-step" id="step4" style="display: none;">
+        <h3>🧠 Regras de Dedução Lógica</h3>
+        <p>O puzzle segue regras simples de lógica que te ajudam a resolver:</p>
+
+        <div class="rules-list">
+          <li>
+            <strong>Regra 1 - Uma causa por sintoma:</strong> 
+            Se você descobrir que um sintoma vem de uma causa específica (✓), 
+            todos os outros suspeitos naquela linha devem ser descartados (✗).
+          </li>
+          <li>
+            <strong>Regra 2 - Uma solução única:</strong> 
+            Apenas UMA causa é a verdadeira culpada. Se descartou 3, a última deve ser SIM.
+          </li>
+          <li>
+            <strong>Regra 3 - Consistência:</strong> 
+            Se uma causa é SIM em um sintoma, verifique se faz sentido nos outros sintomas também.
+          </li>
+        </div>
+
+        <p style="margin-top: 1.5rem;">
+          <strong>Dica de estratégia:</strong> Comece eliminando as possibilidades óbvias com ✗, 
+          depois veja o que sobra!
+        </p>
+      </div>
+
+      <!-- Passo 5: Exemplo Prático -->
+      <div class="tutorial-step" id="step5" style="display: none;">
+        <h3>💡 Exemplo Prático de Dedução</h3>
+        
+        <p><strong>Dica 1:</strong> "HTTP 200 OK em ambos os usuários"</p>
+        <p style="color: #666; font-size: 12px; margin-bottom: 1rem;">
+          → Se a resposta foi 200 OK, não é problema de timeout (Sincronização RPC Lenta seria erro 504). 
+          Logo: <strong style="color: #F44336;">✗ NÃO é Sincronização RPC Lenta</strong>
+        </p>
+
+        <p><strong>Dica 2:</strong> "Janela de 100ms entre transações"</p>
+        <p style="color: #666; font-size: 12px; margin-bottom: 1rem;">
+          → Uma janela de 100ms é super pequena. Cache com TTL errado demoraria mais. 
+          Logo: <strong style="color: #F44336;">✗ NÃO é Cache Desatualizado</strong>
+        </p>
+
+        <p><strong>Dica 3:</strong> "Dois commits simultâneos no banco de dados"</p>
+        <p style="color: #666; font-size: 12px; margin-bottom: 1rem;">
+          → Se dois commits chegaram ao banco, não é problema de idempotência (seria rejeitado). 
+          Logo: <strong style="color: #F44336;">✗ NÃO é Falta de Idempotência</strong>
+        </p>
+
+        <p><strong>Conclusão:</strong></p>
+        <p style="color: #4CAF50; font-weight: bold; font-size: 14px; margin-top: 1rem;">
+          ✓ Sobrou apenas uma: Lock de DB Não Liberado — ESSA É A RESPOSTA!
+        </p>
+      </div>
+
+      <!-- Passo 6: Pronto para Jogar -->
+      <div class="tutorial-step" id="step6" style="display: none;">
+        <h3>🚀 Pronto para Começar?</h3>
+        <p>
+          Você já sabe tudo o que precisa! Agora é hora de resolver o puzzle real com seu time.
+        </p>
+        <p style="margin-top: 1rem;">
+          <strong>Lembrete importante:</strong>
+        </p>
+        <div class="tips-box">
+          <strong>Dicas para resolver rápido:</strong><br/>
+          • Trabalhem juntos — debatam cada marca<br/>
+          • Comece eliminando com ✗ as obviedades<br/>
+          • Use a lógica: se algo é SIM, o resto é NÃO<br/>
+          • Não deixe ? para o final — resolva!
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn-secondary" id="prevBtn" onclick="previousStep()" style="display: none;">← Anterior</button>
+        <button class="btn-primary" id="nextBtn" onclick="nextStep()">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- SEÇÃO JOGO -->
+    <div class="game-section" id="gameSection">
+      <div class="timer">
+        ⏱️ <span id="timeLeft">15:00</span>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-box yes-box">✓</div>
+          <span>Sim — provável</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-box no-box">✗</div>
+          <span>Não — descartado</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-box maybe-box">?</div>
+          <span>Talvez — incerto</span>
+        </div>
+      </div>
+
+      <div class="grid-container">
+        <div class="grid" id="grid"></div>
+      </div>
+
+      <div class="tips-box">
+        <strong>💡 Dica durante o jogo:</strong> Clique nas células para ciclar entre ✓ SIM, ✗ NÃO, ? TALVEZ. 
+        Debata com o time antes de fazer cada marca!
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn-orange" onclick="resetGame()">🔄 Recomeçar</button>
+        <button class="btn-success" onclick="validatePuzzle()" id="submitBtn">✓ Validar Solução</button>
+      </div>
+
+      <div class="result" id="resultBox"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const causes = [
+  "Lock de DB Não Liberado",
+  "Cache Desatualizado",
+  "Falta de Idempotência",
+  "Sincronização RPC Lenta"
+];
+
+const symptoms = [
+  "Ambos usuários recebem 200 OK",
+  "Janela de 100ms entre transações",
+  "Dois assentos iguais foram vendidos",
+  "Logs mostram dois commits simultâneos"
+];
+
+const solutionGrid = [
+  [1, 0, 0, 0],
+  [1, 0, 0, 0],
+  [1, 0, 0, 0],
+  [1, 0, 0, 0]
+];
+
+let gridState = [];
+let gameTime = 900;
+let gameActive = true;
+let timerInterval = null;
+let currentStep = 1;
+const totalSteps = 6;
+
+function updateProgress() {
+  const progress = (currentStep / totalSteps) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+}
+
+function showStep(step) {
+  for (let i = 1; i <= totalSteps; i++) {
+    const el = document.getElementById('step' + i);
+    if (el) el.style.display = i === step ? 'block' : 'none';
+  }
+
+  document.getElementById('prevBtn').style.display = step > 1 ? 'block' : 'none';
+  document.getElementById('nextBtn').textContent = step < totalSteps ? 'Próximo →' : 'Começar Jogo →';
+  updateProgress();
+}
+
+function nextStep() {
+  if (currentStep < totalSteps) {
+    currentStep++;
+    showStep(currentStep);
+    window.scrollTo(0, 0);
+  } else {
+    startGame();
+  }
+}
+
+function previousStep() {
+  if (currentStep > 1) {
+    currentStep--;
+    showStep(currentStep);
+    window.scrollTo(0, 0);
+  }
+}
+
+function startGame() {
+  document.getElementById('tutorial').classList.remove('active');
+  document.getElementById('gameSection').classList.add('active');
+  gridState = Array(symptoms.length).fill().map(() => Array(causes.length).fill(0));
+  renderGrid();
+  startTimer();
+  window.scrollTo(0, 0);
+}
+
+function renderGrid() {
+  const gridEl = document.getElementById('grid');
+  const cols = causes.length + 1;
+  const rows = symptoms.length + 1;
+  
+  gridEl.style.gridTemplateColumns = `repeat(${cols}, 220px)`;
+  gridEl.innerHTML = '';
+
+  gridEl.appendChild(createCell('', 'empty'));
+
+  for (let i = 0; i < causes.length; i++) {
+    gridEl.appendChild(createCell(causes[i], 'header-col'));
+  }
+
+  for (let row = 0; row < symptoms.length; row++) {
+    gridEl.appendChild(createCell(symptoms[row], 'header-row'));
+    
+    for (let col = 0; col < causes.length; col++) {
+      const cell = createCell('', 'puzzle');
+      cell.dataset.row = row;
+      cell.dataset.col = col;
+      cell.onclick = () => toggleCell(row, col, cell);
+      updateCellDisplay(cell, row, col);
+      gridEl.appendChild(cell);
+    }
+  }
+}
+
+function createCell(text, type) {
+  const cell = document.createElement('div');
+  cell.className = `cell ${type}`;
+  cell.textContent = text;
+  return cell;
+}
+
+function toggleCell(row, col, cell) {
+  if (!gameActive) return;
+  gridState[row][col] = (gridState[row][col] + 1) % 3;
+  updateCellDisplay(cell, row, col);
+}
+
+function updateCellDisplay(cell, row, col) {
+  const state = gridState[row][col];
+  cell.classList.remove('yes', 'no', 'maybe');
+  
+  if (state === 1) {
+    cell.classList.add('yes');
+    cell.textContent = '✓';
+  } else if (state === 2) {
+    cell.classList.add('no');
+    cell.textContent = '✗';
+  } else {
+    cell.classList.add('maybe');
+    cell.textContent = '?';
+  }
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    gameTime--;
+    const mins = Math.floor(gameTime / 60);
+    const secs = gameTime % 60;
+    document.getElementById('timeLeft').textContent = 
+      `${mins}:${secs.toString().padStart(2, '0')}`;
+    
+    if (gameTime <= 0) {
+      endGame(false, 'TEMPO ESGOTADO! A investigação foi interrompida.');
+    }
+  }, 1000);
+}
+
+function validatePuzzle() {
+  if (!gameActive) return;
+
+  let isCorrect = true;
+  for (let row = 0; row < symptoms.length; row++) {
+    for (let col = 0; col < causes.length; col++) {
+      if (gridState[row][col] !== solutionGrid[row][col]) {
+        isCorrect = false;
+        break;
+      }
+    }
+    if (!isCorrect) break;
+  }
+
+  if (isCorrect) {
+    endGame(true, 
+      `✅ PUZZLE RESOLVIDO!\n\n` +
+      `Vocês identificaram corretamente a causa raiz!\n\n` +
+      `Bug: Lock de DB Não Liberado\n\n` +
+      `Explicação técnica:\n` +
+      `O código estava fazendo SELECT sem FOR UPDATE, criando uma race condition.\n` +
+      `Dois usuários liam 'assento disponível' simultaneamente e ambos conseguiam comprar.\n\n` +
+      `Solução: Use SELECT ... FOR UPDATE para criar lock exclusivo na transação.`
+    );
+  } else {
+    endGame(false, 
+      `❌ SOLUÇÃO INCORRETA\n\n` +
+      `Verifique suas deduções:\n` +
+      `• Marque com ✓ apenas o que tem CERTEZA\n` +
+      `• Use ✗ para eliminar possibilidades\n` +
+      `• Revise: se algo é SIM, o resto da linha é NÃO\n\n` +
+      `Tente novamente!`
+    );
+  }
+}
+
+function endGame(won, message) {
+  gameActive = false;
+  clearInterval(timerInterval);
+  
+  const resultEl = document.getElementById('resultBox');
+  resultEl.classList.add('show');
+  if (!won) resultEl.classList.add('wrong');
+  
+  const lines = message.split('\n');
+  let html = '';
+  
+  lines.forEach((line, idx) => {
+    if (line.startsWith('✅') || line.startsWith('❌')) {
+      html += `<h2>${line}</h2>`;
+    } else if (line.startsWith('USE') || line.startsWith('Solução:')) {
+      html += `<code>${line}</code>`;
+    } else if (line.trim()) {
+      html += `<p>${line}</p>`;
+    }
+  });
+  
+  resultEl.innerHTML = html;
+  document.getElementById('submitBtn').disabled = true;
+}
+
+function resetGame() {
+  gameTime = 900;
+  gameActive = true;
+  
+  clearInterval(timerInterval);
+  timerInterval = null;
+  
+  document.getElementById('resultBox').classList.remove('show', 'wrong');
+  document.getElementById('resultBox').innerHTML = '';
+  document.getElementById('submitBtn').disabled = false;
+  
+  renderGrid();
+  startTimer();
+}
+
+showStep(1);
+</script>
+
+</body>
+</html>
