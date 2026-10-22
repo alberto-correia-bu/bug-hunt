@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#163b36">
+<title>Guia de estudo — Jogos de tabuleiro modernos e ensino de Ciências</title>
+<style>
+:root{--ink:#192c2a;--muted:#5c706c;--paper:#f5f7f2;--card:#fff;--line:#dce5de;--green:#176b57;--green2:#dcefe6;--orange:#d97736;--orange2:#fff0e2;--blue:#e7eff9;--shadow:0 12px 34px #15352c12}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.62 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:var(--green)}button{font:inherit;cursor:pointer}.wrap{max-width:1120px;margin:auto;padding:0 22px}
+header{background:linear-gradient(130deg,#143b34,#176b57 65%,#35846c);color:white;padding:46px 0 38px}
+.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:.75rem;font-weight:800;opacity:.82}
+h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.08;max-width:850px;margin:12px 0 16px;letter-spacing:-.035em}
+header p{max-width:760px;font-size:1.08rem;color:#e3f1eb}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.pill{display:inline-flex;align-items:center;border:1px solid #ffffff55;border-radius:99px;padding:5px 11px;font-size:.82rem}
+nav{position:sticky;top:0;z-index:5;background:#fffffff0;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px}nav a{white-space:nowrap;text-decoration:none;color:var(--ink);font-size:.86rem;padding:7px 10px;border-radius:9px}nav a:hover{background:var(--green2)}
+main{padding:28px 0 70px}.intro{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);min-width:0}
+.card h2,.section-title{margin:0 0 12px;line-height:1.2;letter-spacing:-.02em}.section-title{font-size:1.75rem;margin:42px 0 16px}.card h3{margin:0 0 7px;line-height:1.25}
+.callout{border-left:4px solid var(--orange);background:var(--orange2);padding:14px 16px;border-radius:0 12px 12px 0}
+.small{color:var(--muted);font-size:.9rem}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+ul,ol{padding-left:1.25rem}li+li{margin-top:6px}.tag{display:inline-block;background:var(--green2);color:#155442;padding:3px 8px;border-radius:6px;font-size:.78rem;font-weight:750}
+.map{padding:18px}.map svg{display:block;width:100%;height:auto;max-height:440px}.map-note{font-size:.9rem;color:var(--muted);margin:8px 0 0}
+.step{border-top:3px solid var(--green);padding-top:13px}.step .num{font-size:.8rem;font-weight:800;color:var(--green);letter-spacing:.1em}
+table{width:100%;border-collapse:collapse;font-size:.93rem}th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:11px 9px}th{color:#315b50;background:#f2f7f3}
+.flash{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:start}.flash-front{font-weight:800;font-size:1.2rem}.flash-answer{margin-top:14px;padding:14px;border-radius:12px;background:var(--green2);display:none}.flash-answer.show{display:block}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.btn{border:1px solid var(--line);border-radius:10px;padding:9px 13px;background:white;color:var(--ink);font-weight:700}.btn.primary{background:var(--green);border-color:var(--green);color:white}.btn:hover{filter:brightness(.97)}.progress{height:7px;background:#e5ece7;border-radius:99px;overflow:hidden;margin:14px 0}.progress span{display:block;height:100%;background:var(--green);width:0}
+.quiz-item{padding:16px 0;border-bottom:1px solid var(--line)}.quiz-item p{font-weight:750;margin:0 0 8px}.quiz-item label{display:block;padding:6px 0}.feedback{font-size:.9rem;margin-top:8px;color:var(--muted)}.result{font-weight:800;margin-top:12px}
+footer{background:#173b34;color:#e8f2ed;padding:28px 0}footer p{margin:6px 0}.source{overflow-wrap:anywhere}
+@media(max-width:760px){.intro,.grid2,.grid3{grid-template-columns:1fr}.wrap{padding-left:15px;padding-right:15px}header{padding:34px 0 30px}.card{padding:18px}.section-title{font-size:1.5rem;margin-top:34px}.flash{grid-template-columns:1fr}table{font-size:.86rem}th,td{padding:9px 6px}}
+@media print{nav,.controls,.btn{display:none!important}body{background:white}.card{box-shadow:none;break-inside:avoid}header{background:white;color:black;padding:10px 0}header p{color:#333}main{padding-top:0}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<div class="eyebrow">Material de estudo interativo</div>
+<h1>Educação lúdica: jogos de tabuleiro modernos como ferramenta pedagógica</h1>
+<p>Um guia para compreender o argumento do artigo, as características dos jogos modernos e as possibilidades pedagógicas do <em>Pandemic</em> no ensino de Ciências.</p>
+<div class="meta"><span class="pill">Laíse Lima do Prado</span><span class="pill">Ludus Scientiae · v. 2, n. 2 · 2018</span><span class="pill">Páginas 26–38</span><span class="pill">Leitura guiada + revisão</span></div>
+</div>
+</header>
+<nav><div class="wrap">
+<a href="#sintese">Síntese</a><a href="#mapa">Mapa conceitual</a><a href="#conceitos">Conceitos</a><a href="#pandemic">Pandemic</a><a href="#aula">Aplicação didática</a><a href="#limites">Limites</a><a href="#flashcards">Flashcards</a><a href="#quiz">Quiz</a>
+</div></nav>
+<main class="wrap">
+<section id="sintese" class="intro">
+<div class="card">
+<h2>A ideia central</h2>
+<p>O artigo defende que jogos de tabuleiro — especialmente os modernos — podem funcionar como ferramentas metodológicas para apoiar a aprendizagem significativa. Eles criam situações de desafio, decisão, interação e análise dos erros. O exemplo central é <strong><em>Pandemic</em></strong>, um jogo cooperativo que permite explorar conceitos relacionados a doenças, epidemiologia, pesquisa científica, estratégia e trabalho em equipe.</p>
+<div class="callout"><strong>O ponto decisivo:</strong> o jogo não substitui o ensino nem é um fim em si mesmo. Seu potencial educativo depende de uma intenção pedagógica clara e da mediação do professor.</div>
+</div>
+<div class="card">
+<h2>Como o texto foi construído</h2>
+<p>É uma <strong>pesquisa bibliográfica</strong>, que discute ludicidade e jogos educativos e apresenta <em>Pandemic</em> como exemplo de aplicação possível no ensino de Ciências.</p>
+<p class="small">Importante: o artigo discute possibilidades pedagógicas; não apresenta um experimento controlado que comprove quantitativamente resultados de aprendizagem com uma turma específica.</p>
+</div>
+</section>
+
+<section id="mapa">
+<h2 class="section-title">Mapa conceitual</h2>
+<div class="card map">
+<svg viewBox="0 0 900 430" role="img" aria-label="Mapa conceitual que liga jogos modernos, aprendizagem e ensino de Ciências">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#608176"/></marker></defs>
+<rect x="280" y="18" width="340" height="72" rx="16" fill="#176b57"/>
+<text x="450" y="46" text-anchor="middle" fill="white" font-size="18" font-weight="700">Jogos de tabuleiro modernos</text><text x="450" y="69" text-anchor="middle" fill="white" font-size="13">regras + desafio + interação</text>
+<path d="M450 90 V125 H155 V150 M450 125 V150 M450 125 H745 V150" stroke="#608176" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="25" y="150" width="260" height="82" rx="13" fill="#dcefe6" stroke="#a8cbbd"/>
+<text x="155" y="178" text-anchor="middle" font-size="16" font-weight="700" fill="#164e40">Decisão estratégica</text><text x="155" y="201" text-anchor="middle" font-size="13" fill="#164e40">hipóteses, escolhas e revisão</text>
+<rect x="320" y="150" width="260" height="82" rx="13" fill="#e7eff9" stroke="#b9cbe0"/>
+<text x="450" y="178" text-anchor="middle" font-size="16" font-weight="700" fill="#24496d">Cooperação</text><text x="450" y="201" text-anchor="middle" font-size="13" fill="#24496d">comunicação e objetivo comum</text>
+<rect x="615" y="150" width="260" height="82" rx="13" fill="#fff0e2" stroke="#e9c49f"/>
+<text x="745" y="178" text-anchor="middle" font-size="16" font-weight="700" fill="#81451e">Aprender com erros</text><text x="745" y="201" text-anchor="middle" font-size="13" fill="#81451e">autoavaliação e novas estratégias</text>
+<path d="M155 232 V270 H450 V292 M450 232 V292 M745 232 V270 H450" stroke="#608176" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="250" y="292" width="400" height="70" rx="15" fill="#173b34"/>
+<text x="450" y="320" text-anchor="middle" font-size="17" font-weight="700" fill="white">Mediação pedagógica do professor</text><text x="450" y="342" text-anchor="middle" font-size="13" fill="white">conectar a experiência aos conceitos curriculares</text>
+<path d="M450 362 V385" stroke="#608176" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="450" y="409" text-anchor="middle" font-size="16" font-weight="700" fill="#176b57">Possibilidades no ensino de Ciências</text>
+</svg>
+<p class="map-note">Síntese visual produzida a partir do argumento do artigo. As setas representam relações pedagógicas propostas, não uma sequência experimental comprovada.</p>
+</div>
+</section>
+
+<section id="conceitos">
+<h2 class="section-title">Conceitos-chave</h2>
+<div class="grid2">
+<div class="card"><span class="tag">Ludicidade</span><h3>Mais do que diversão</h3><p>O jogo envolve regras, objetivos, tensão, incerteza e participação voluntária. O desafio é fazer com que a experiência lúdica tenha conexão real com a aprendizagem.</p><p class="small">Referência no artigo: discussão de Huizinga e outros autores, pp. 27–30.</p></div>
+<div class="card"><span class="tag">Jogo educativo</span><h3>Intenção de ensinar</h3><p>Na perspectiva citada pelo texto, um jogo pode ser educativo quando é usado na escola respeitando o caráter lúdico e há intenção explícita de promover aprendizagem. O conteúdo não deve ser apenas decorativo.</p><p class="small">Referência: p. 30.</p></div>
+<div class="card"><span class="tag">Jogos modernos</span><h3>Escolhas com consequências</h3><p>Em geral, combinam interação, gestão de recursos, decisões táticas, baixa influência da sorte em comparação com jogos puramente aleatórios e mecanismos que mantêm os participantes envolvidos.</p><p class="small">Referência: p. 31.</p></div>
+<div class="card"><span class="tag">Erro produtivo</span><h3>Rever a estratégia</h3><p>Uma jogada malsucedida pode levar o participante a identificar falhas, rever hipóteses, observar outras estratégias e tomar decisões diferentes na próxima tentativa.</p><p class="small">Referência: pp. 31–32.</p></div>
+</div>
+<h3 style="margin-top:26px">Jogos clássicos e modernos: a distinção apresentada</h3>
+<div class="card" style="overflow-x:auto"><table>
+<thead><tr><th>Aspecto</th><th>Tendência descrita para jogos modernos</th><th>Possível valor pedagógico</th></tr></thead>
+<tbody>
+<tr><td>Duração</td><td>Em geral, de 30 minutos a 2 horas.</td><td>Ajuda a planejar uma atividade dentro do tempo de aula, embora a partida possa exigir adaptação.</td></tr>
+<tr><td>Interação</td><td>Interação frequente entre participantes.</td><td>Cria oportunidades de explicar decisões, negociar e compartilhar informações.</td></tr>
+<tr><td>Sorte</td><td>Menor influência relativa da sorte em muitos títulos.</td><td>Destaca planejamento, análise de possibilidades e tomada de decisão.</td></tr>
+<tr><td>Eliminação</td><td>Evita eliminar participantes cedo ou reduz o tempo de espera.</td><td>Favorece participação contínua de mais estudantes.</td></tr>
+<tr><td>Equilíbrio</td><td>Alguns jogos oferecem mecanismos para equilibrar vantagens e desvantagens.</td><td>Pode sustentar o envolvimento do grupo durante a partida.</td></tr>
+</tbody></table><p class="small">São tendências gerais descritas pelo artigo, não regras universais de todos os jogos modernos (p. 31).</p></div>
+</section>
+
+<section id="pandemic">
+<h2 class="section-title">O exemplo central: <em>Pandemic</em></h2>
+<div class="grid2">
+<div class="card">
+<h3>Como funciona no artigo</h3>
+<p><em>Pandemic</em>, criado por Matt Leacock e lançado em 2008, coloca os jogadores como uma equipe que tenta conter doenças que se espalham pelo mundo e descobrir a cura de quatro delas. Cada participante assume um papel com habilidades próprias; a equipe precisa coordenar ações e recursos para alcançar um objetivo comum.</p>
+<ul><li>Os jogadores atuam juntos contra o sistema do jogo.</li><li>O turno permite realizar até quatro ações.</li><li>Entre as ações descritas estão viajar, tratar focos de doença, construir centros de pesquisa, compartilhar cartas/conhecimento e buscar curas.</li><li>A partida pode terminar em derrota coletiva se a propagação sair de controle ou os recursos necessários se esgotarem.</li></ul>
+<p class="small">Referência: pp. 32–33.</p>
+</div>
+<div class="card">
+<h3>O que pode ser explorado em Ciências</h3>
+<ul><li><strong>Epidemia e pandemia:</strong> discutir os termos e as diferenças de escala apresentados no artigo.</li><li><strong>Prevenção e contenção:</strong> refletir sobre medidas para reduzir a propagação de doenças.</li><li><strong>Pesquisa científica:</strong> considerar como evidências, recursos e coordenação contribuem para buscar soluções.</li><li><strong>Gestão de recursos:</strong> priorizar ações com recursos e tempo limitados.</li><li><strong>Colaboração:</strong> distribuir funções, compartilhar informações e justificar decisões.</li></ul>
+<div class="callout"><strong>Cuidado conceitual:</strong> o jogo é uma simulação lúdica, não um modelo epidemiológico completo. As regras servem para criar decisões e discussão; não substituem fontes científicas sobre doenças reais.</div>
+</div>
+</div>
+<h3 style="margin-top:22px">Papéis citados e oportunidades de discussão</h3>
+<div class="card" style="overflow-x:auto"><table>
+<thead><tr><th>Papel no jogo</th><th>Habilidade descrita no artigo</th><th>Gancho para conversa em aula</th></tr></thead>
+<tbody>
+<tr><td>Agente de Viagens</td><td>Facilita a movimentação da equipe.</td><td>Rotas, distância, planejamento e priorização.</td></tr>
+<tr><td>Engenheiro</td><td>Constrói centros de pesquisa com mais facilidade.</td><td>Infraestrutura científica e uso estratégico de recursos.</td></tr>
+<tr><td>Cientista</td><td>Precisa de menos cartas para descobrir uma cura.</td><td>Pesquisa, evidências e especialização.</td></tr>
+<tr><td>Médico</td><td>Trata focos de doença mais rapidamente e pode erradicar uma doença com mais facilidade.</td><td>Tratamento, prevenção e limites de uma representação lúdica.</td></tr>
+<tr><td>Pesquisadora</td><td>Compartilha conhecimento/cartas com mais agilidade.</td><td>Circulação de informação e colaboração.</td></tr>
+<tr><td>Planejador de Contingência</td><td>Recupera eventos já usados.</td><td>Planejamento e preparação para imprevistos.</td></tr>
+<tr><td>Especialista em Quarentena</td><td>Ajuda a limitar a propagação de focos em localidades.</td><td>Quarentena, isolamento e saúde pública — sempre distinguindo o jogo da prática real.</td></tr>
+</tbody></table><p class="small">Os nomes e habilidades acima seguem a descrição do artigo nas pp. 33–34; versões e edições do jogo podem variar.</p></div>
+</section>
+
+<section id="aula">
+<h2 class="section-title">Como transformar a partida em atividade pedagógica</h2>
+<p class="small">A sequência abaixo é uma proposta prática derivada das possibilidades discutidas no artigo, não um plano de aula testado pelos autores.</p>
+<div class="grid3">
+<div class="card step"><div class="num">ETAPA 1</div><h3>Antes de jogar</h3><ul><li>Defina os conceitos curriculares que serão trabalhados.</li><li>Apresente o objetivo cooperativo e as regras essenciais.</li><li>Peça aos grupos que antecipem quais ações podem ser prioritárias e por quê.</li></ul></div>
+<div class="card step"><div class="num">ETAPA 2</div><h3>Durante a partida</h3><ul><li>Peça que os estudantes verbalizem decisões e critérios.</li><li>Estimule a distribuição de papéis e o compartilhamento de informação.</li><li>Registre decisões, dificuldades e mudanças de estratégia.</li></ul></div>
+<div class="card step"><div class="num">ETAPA 3</div><h3>Depois de jogar</h3><ul><li>Faça uma conversa de reflexão: o que funcionou e o que não funcionou?</li><li>Relacione as situações do jogo a conceitos científicos corretos.</li><li>Peça uma síntese individual ou coletiva com evidências e limites da simulação.</li></ul></div>
+</div>
+<div class="card" style="margin-top:16px">
+<h3>Questões para discussão após a partida</h3>
+<ol><li>Que informações foram decisivas para as escolhas do grupo?</li><li>Quando a equipe mudou de estratégia? O que motivou a mudança?</li><li>Como a distribuição de papéis influenciou as decisões?</li><li>O que o jogo representa de forma simplificada sobre epidemias e pesquisa?</li><li>Quais aspectos da vida real não podem ser concluídos apenas a partir das regras do jogo?</li></ol>
+</div>
+</section>
+
+<section id="limites">
+<h2 class="section-title">Leitura crítica: o que o artigo permite concluir?</h2>
+<div class="grid2">
+<div class="card">
+<h3>O texto sustenta</h3>
+<ul><li>Jogos podem oferecer oportunidades para aprender por meio de desafios, interação e reflexão.</li><li>Jogos modernos frequentemente enfatizam estratégia, decisões e cooperação.</li><li><em>Pandemic</em> oferece pontos de partida para abordar temas ligados a Ciências e saúde.</li><li>O currículo e o planejamento escolar precisam reservar espaço para que os jogos sejam considerados uma possibilidade metodológica.</li></ul>
+</div>
+<div class="card">
+<h3>O texto não comprova por si só</h3>
+<ul><li>Que qualquer jogo melhora automaticamente a aprendizagem.</li><li>Que todos os jogos modernos têm as mesmas características.</li><li>Que jogar <em>Pandemic</em>, sem mediação ou reflexão, garante compreensão científica.</li><li>Que as simulações e regras do jogo descrevem integralmente o funcionamento de epidemias reais.</li></ul>
+</div>
+</div>
+<div class="callout" style="margin-top:16px"><strong>Leitura equilibrada:</strong> o valor pedagógico depende da escolha do jogo, dos objetivos de aprendizagem, da mediação do professor e da atividade de reflexão que conecta a experiência aos conceitos científicos.</div>
+</section>
+
+<section id="flashcards">
+<h2 class="section-title">Flashcards para memorizar</h2>
+<div class="card">
+<div class="small" id="fc-count">Cartão 1 de 12</div><div class="progress"><span id="fc-progress"></span></div>
+<div class="flash"><div><div class="flash-front" id="fc-front"></div><div class="flash-answer" id="fc-answer"></div></div><span class="tag" id="fc-status">Revisar</span></div>
+<div class="controls"><button class="btn primary" id="fc-reveal">Mostrar resposta</button><button class="btn" id="fc-known">Já sei</button><button class="btn" id="fc-review">Revisar depois</button></div>
+<div class="controls"><button class="btn" id="fc-prev">← Anterior</button><button class="btn" id="fc-next">Próximo →</button><button class="btn" id="fc-reset">Reiniciar cartões</button></div>
+<p class="small" id="fc-score" aria-live="polite"></p>
+</div>
+</section>
+
+<section id="quiz">
+<h2 class="section-title">Quiz de revisão</h2>
+<div class="card">
+<p>Escolha uma resposta por questão e confira o resultado. As perguntas verificam a compreensão do artigo, não detalhes externos.</p>
+<form id="quiz-form">
+<div class="quiz-item"><p>1. Qual é a ideia central defendida no artigo?</p>
+<label><input type="radio" name="q1" value="a"> Jogos devem substituir as aulas expositivas em todas as disciplinas.</label>
+<label><input type="radio" name="q1" value="b"> Jogos modernos podem apoiar a aprendizagem quando integrados intencionalmente ao ensino.</label>
+<label><input type="radio" name="q1" value="c"> Jogos só funcionam para crianças pequenas.</label><div class="feedback" id="f1"></div></div>
+<div class="quiz-item"><p>2. Qual é um diferencial frequentemente associado aos jogos modernos?</p>
+<label><input type="radio" name="q2" value="a"> Ausência completa de regras.</label>
+<label><input type="radio" name="q2" value="b"> Eliminação obrigatória de todos os participantes.</label>
+<label><input type="radio" name="q2" value="c"> Decisões estratégicas e interação entre participantes.</label><div class="feedback" id="f2"></div></div>
+<div class="quiz-item"><p>3. Em <em>Pandemic</em>, os jogadores trabalham principalmente para...</p>
+<label><input type="radio" name="q3" value="a"> vencer individualmente os demais participantes.</label>
+<label><input type="radio" name="q3" value="b"> cooperar para conter doenças e descobrir curas dentro do sistema do jogo.</label>
+<label><input type="radio" name="q3" value="c"> responder a perguntas de múltipla escolha sobre biologia.</label><div class="feedback" id="f3"></div></div>
+<div class="quiz-item"><p>4. Como os erros podem contribuir para aprender durante o jogo?</p>
+<label><input type="radio" name="q4" value="a"> Ajudam a identificar falhas e revisar estratégias.</label>
+<label><input type="radio" name="q4" value="b"> Devem ser ignorados para preservar a diversão.</label>
+<label><input type="radio" name="q4" value="c"> Provam que o estudante não tem habilidade para aprender.</label><div class="feedback" id="f4"></div></div>
+<div class="quiz-item"><p>5. Qual cuidado é mais coerente ao usar <em>Pandemic</em> em Ciências?</p>
+<label><input type="radio" name="q5" value="a"> Tratar as regras do jogo como descrição completa de epidemias reais.</label>
+<label><input type="radio" name="q5" value="b"> Evitar qualquer conversa após a partida.</label>
+<label><input type="radio" name="q5" value="c"> Fazer a mediação e distinguir a simulação dos conhecimentos científicos sobre o mundo real.</label><div class="feedback" id="f5"></div></div>
+<div class="controls"><button type="submit" class="btn primary">Corrigir quiz</button><button type="button" class="btn" id="quiz-reset">Limpar respostas</button></div>
+<div class="result" id="quiz-result" aria-live="polite"></div>
+</form>
+</div>
+</section>
+
+<section id="referencia">
+<h2 class="section-title">Referência do material-base</h2>
+<div class="card">
+<p class="source">PRADO, Laíse Lima do. <strong>Jogos de tabuleiro modernos como ferramenta pedagógica: Pandemic e o ensino de ciências.</strong> <em>Revista Eletrônica Ludus Scientiae (RELuS)</em>, Foz do Iguaçu, v. 2, n. 2, p. 26–38, jul./dez. 2018.</p>
+<p class="small">Este guia resume e organiza ideias do PDF fornecido. O mapa conceitual, a proposta de aula, os flashcards e o quiz são recursos didáticos derivados para estudo; não fazem parte do artigo original.</p>
+</div>
+</section>
+</main>
+<footer><div class="wrap"><strong>Guia de estudo interativo</strong><p>Use os cartões e o quiz para revisar. Para uma leitura acadêmica, consulte o artigo original e confira os conceitos no contexto das páginas citadas.</p><p class="small" style="color:#c3d8d0">Arquivo HTML independente · funciona offline · adaptado para celular e computador.</p></div></footer>
+<script>
+const cards=[
+["Qual é a tese central do artigo?","Jogos de tabuleiro modernos podem ser uma possibilidade metodológica para apoiar a aprendizagem significativa, desde que haja intenção pedagógica e conexão com os conceitos curriculares."],
+["Que tipo de pesquisa é apresentado?","Pesquisa bibliográfica, com discussão teórica sobre ludicidade e jogos educativos e análise de possibilidades de uso do Pandemic."],
+["O que caracteriza um jogo educativo na discussão do artigo?","A intenção explícita de provocar aprendizagem, preservando o caráter lúdico do jogo."],
+["Quais características aparecem com frequência nos jogos modernos?","Interação, decisões estratégicas, gestão de recursos, dilemas e, em muitos casos, menor influência da sorte."],
+["Por que o erro pode ser útil durante uma partida?","Porque permite analisar o que falhou, rever hipóteses e testar outra estratégia."],
+["Qual é o objetivo cooperativo de Pandemic?","Conter a propagação das doenças e descobrir curas para quatro doenças dentro das regras do jogo."],
+["Quantas ações um jogador pode realizar por turno, segundo o artigo?","Até quatro ações, escolhidas entre as opções disponíveis nas regras descritas."],
+["Cite três ações mencionadas no artigo para Pandemic.","Viajar entre cidades, tratar focos de doença, construir centros de pesquisa, compartilhar cartas/conhecimento ou buscar curas."],
+["O que a cooperação possibilita no jogo?","Combinar habilidades, compartilhar informações, planejar em conjunto e coordenar ações em direção a um objetivo comum."],
+["Como o professor pode conectar o jogo ao ensino de Ciências?","Definindo objetivos, mediando a experiência e conduzindo uma reflexão que relacione as decisões do jogo aos conceitos científicos."],
+["Qual é uma limitação importante do artigo?","É uma discussão bibliográfica de possibilidades; não relata um experimento controlado que quantifique efeitos de aprendizagem numa turma específica."],
+["Por que não se deve tratar Pandemic como um modelo científico completo?","Porque é uma simulação regida por regras lúdicas; a mediação deve explicitar simplificações e diferenciar o jogo das evidências sobre doenças reais."]
+];
+let index=0;const status=Array(cards.length).fill("Revisar");const revealed=Array(cards.length).fill(false);
+const $=id=>document.getElementById(id);
+function renderCard(){ $("fc-count").textContent=`Cartão ${index+1} de ${cards.length}`;$("fc-progress").style.width=((index+1)/cards.length*100)+"%";$("fc-front").textContent=cards[index][0];$("fc-answer").textContent=cards[index][1];$("fc-answer").classList.toggle("show",revealed[index]);$("fc-reveal").textContent=revealed[index]?"Ocultar resposta":"Mostrar resposta";$("fc-status").textContent=status[index];$("fc-score").textContent=`Marcados como “Já sei”: ${status.filter(x=>x==="Já sei").length} de ${cards.length}.`;}
+$("fc-reveal").onclick=()=>{revealed[index]=!revealed[index];renderCard()};
+$("fc-known").onclick=()=>{status[index]="Já sei";index=Math.min(index+1,cards.length-1);renderCard()};
+$("fc-review").onclick=()=>{status[index]="Revisar";index=Math.min(index+1,cards.length-1);renderCard()};
+$("fc-prev").onclick=()=>{index=(index+cards.length-1)%cards.length;renderCard()};
+$("fc-next").onclick=()=>{index=(index+1)%cards.length;renderCard()};
+$("fc-reset").onclick=()=>{index=0;status.fill("Revisar");revealed.fill(false);renderCard()};
+renderCard();
+const answers={q1:"b",q2:"c",q3:"b",q4:"a",q5:"c"};
+const explanations={q1:"O artigo apresenta jogos como uma possibilidade metodológica, não como substitutos universais.",q2:"O texto destaca estratégia, interação e decisões como características frequentes.",q3:"A equipe coopera para conter doenças e encontrar curas dentro do jogo.",q4:"A análise do erro pode orientar a revisão de procedimentos e estratégias.",q5:"A mediação deve relacionar a partida ao conteúdo e explicitar as simplificações da simulação."};
+$("quiz-form").addEventListener("submit",e=>{e.preventDefault();let score=0;for(const [q,a] of Object.entries(answers)){const chosen=document.querySelector(`input[name="${q}"]:checked`);const ok=chosen&&chosen.value===a;if(ok)score++;$("f"+q.slice(1)).textContent=(ok?"Correto. ":"Ainda não. ")+explanations[q];$("f"+q.slice(1)).style.color=ok?"#176b57":"#9a4b26";}$("quiz-result").textContent=`Resultado: ${score} de ${Object.keys(answers).length}. ${score===5?"Excelente revisão!":score>=3?"Bom resultado; revise os pontos que errou.":"Releia a síntese e tente novamente."}`;});
+$("quiz-reset").onclick=()=>{$("quiz-form").reset();for(let i=1;i<=5;i++)$("f"+i).textContent="";$("quiz-result").textContent="";};
+</script>
+</body>
+</html>
