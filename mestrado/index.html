@@ -19,6 +19,12 @@
     }
     h1 { font-size: 1.6rem; margin-bottom: 0.25rem; }
     .subtitle { color: #666; margin-bottom: 2rem; }
+    .section-title {
+      font-size: 1.2rem;
+      margin: 2rem 0 0.75rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid #ddd;
+    }
     .topics { display: flex; flex-direction: column; gap: 1rem; }
     .topic {
       padding: 1.25rem;
@@ -26,7 +32,8 @@
       border: 1px solid #ddd;
       border-radius: 8px;
     }
-    .topic h2 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+    .topic h2 { font-size: 1.1rem; margin-bottom: 0.25rem; }
+    .ref { font-size: 0.85rem; color: #666; margin-bottom: 0.75rem; }
     .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .btn {
       display: inline-flex;
@@ -50,6 +57,7 @@
     }
     .tag.html { background: #1565c0; }
     .tag.pdf { background: #c62828; }
+    .tag.link { background: #2e7d32; }
   </style>
 </head>
 <body>
@@ -57,9 +65,23 @@
     <h1>Mestrado</h1>
     <p class="subtitle">Guias de estudo e artigos originais</p>
 
+    <h2 class="section-title">Edital</h2>
+    <div class="topics">
+      <section class="topic">
+        <h2>Edital de Seleção PPGPE — 1º semestre de 2027</h2>
+        <div class="actions">
+          <a class="btn" href="Edital_de_Selecao_PPGPE_1o_semestre_2027.pdf" target="_blank" rel="noopener">
+            <span class="tag pdf">PDF</span> Edital (~470 KB)
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <h2 class="section-title">Artigos</h2>
     <div class="topics">
       <section class="topic">
         <h2>Metodologias ativas de aprendizagem na Educação Profissional e Tecnológica</h2>
+        <p class="ref">Barbosa (2013)</p>
         <div class="actions">
           <a class="btn" href="guia_estudo_metodologias_ativas_ept.html">
             <span class="tag html">HTML</span> Guia de estudo
@@ -72,6 +94,7 @@
 
       <section class="topic">
         <h2>Diversidade sexual e ensino de Ciências: buscando sentidos</h2>
+        <p class="ref">Coelho e Campos (2015)</p>
         <div class="actions">
           <a class="btn" href="guia_estudo_diversidade_sexual_ensino_ciencias.html">
             <span class="tag html">HTML</span> Guia de estudo
@@ -83,7 +106,21 @@
       </section>
 
       <section class="topic">
+        <h2>Educação lúdica: os jogos de tabuleiro modernos como ferramenta pedagógica</h2>
+        <p class="ref">Do Prado (2018)</p>
+        <div class="actions">
+          <a class="btn" href="guia_estudo_jogos_tabuleiro_pandemic.html">
+            <span class="tag html">HTML</span> Guia de estudo
+          </a>
+          <a class="btn" href="pdf/Vista%20do%20Educa%C3%A7%C3%A3o%20l%C3%BAdica_%20os%20jogos%20de%20tabuleiro%20modernos%20como%20ferramenta%20pedag%C3%B3gica.pdf" target="_blank" rel="noopener">
+            <span class="tag pdf">PDF</span> Artigo original (~5,7 MB)
+          </a>
+        </div>
+      </section>
+
+      <section class="topic">
         <h2>Interculturalidade no ensino de Ciências</h2>
+        <p class="ref">Gaudêncio (2022)</p>
         <div class="actions">
           <a class="btn" href="guia_estudo_interculturalidade_ensino_ciencias.html">
             <span class="tag html">HTML</span> Guia de estudo
@@ -95,13 +132,53 @@
       </section>
 
       <section class="topic">
-        <h2>Educação lúdica: os jogos de tabuleiro modernos como ferramenta pedagógica</h2>
+        <h2>Alfabetização científica, ensino por investigação e argumentação: relações entre Ciências da Natureza e escola</h2>
+        <p class="ref">Sasseron (2015)</p>
         <div class="actions">
-          <a class="btn" href="guia_estudo_jogos_tabuleiro_pandemic.html">
+          <a class="btn" href="Estudo_%20Sasseron%20%282015%29%20%E2%80%93%20Alfabetiza%C3%A7%C3%A3o%20cient%C3%ADfica%2C%20investiga%C3%A7%C3%A3o%20e%20argumenta%C3%A7%C3%A3o.html">
             <span class="tag html">HTML</span> Guia de estudo
           </a>
-          <a class="btn" href="pdf/Vista%20do%20Educa%C3%A7%C3%A3o%20l%C3%BAdica_%20os%20jogos%20de%20tabuleiro%20modernos%20como%20ferramenta%20pedag%C3%B3gica.pdf" target="_blank" rel="noopener">
-            <span class="tag pdf">PDF</span> Artigo original (~5,7 MB)
+          <a class="btn" href="pdf/ALFABETIZA%C3%87%C3%83O%20CIENT%C3%8DFICA%2C%20ENSINO%20POR%20INVESTIGA%C3%87%C3%83O%20E%20.pdf" target="_blank" rel="noopener">
+            <span class="tag pdf">PDF</span> Artigo original (~330 KB)
+          </a>
+        </div>
+      </section>
+
+      <section class="topic">
+        <h2>A teoria de Dewey e suas contribuições para o Ensino de Ciências</h2>
+        <p class="ref">Siqueira e Goi (2022)</p>
+        <div class="actions">
+          <a class="btn" href="Estudo_%20A%20teoria%20de%20Dewey%20e%20o%20Ensino%20de%20Ci%C3%AAncias%20%28Siqueira%20e%20Goi%2C%202022%29.html">
+            <span class="tag html">HTML</span> Guia de estudo
+          </a>
+          <a class="btn" href="pdf/Ateoria%20de%20Dewey%20e%20suas%20contribui%C3%A7%C3%B5es%20para%20o%20Ensinode%20Ci%C3%AAncias.pdf" target="_blank" rel="noopener">
+            <span class="tag pdf">PDF</span> Artigo original (~2,9 MB)
+          </a>
+        </div>
+      </section>
+
+      <section class="topic">
+        <h2>As atividades de investigação no Ensino de Ciências na perspectiva da teoria da Aprendizagem Significativa</h2>
+        <p class="ref">Zompero e Laburú (2010)</p>
+        <div class="actions">
+          <a class="btn" href="Estudo_%20Atividades%20investigativas%20e%20Aprendizagem%20Significativa%20%28Zompero%20e%20Labur%C3%BA%2C%202010%29.html">
+            <span class="tag html">HTML</span> Guia de estudo
+          </a>
+          <a class="btn" href="pdf/Dialnet-AsAtividadesDeInvestigacaoNoEnsinoDeCienciasNaPers-3672996%20%281%29.pdf" target="_blank" rel="noopener">
+            <span class="tag pdf">PDF</span> Artigo original (~70 KB)
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <h2 class="section-title">Fonte de estudos</h2>
+    <div class="topics">
+      <section class="topic">
+        <h2>A voz do aluno em tempos presenciais e híbridos: por uma pedagogia de colaboração</h2>
+        <p class="ref">Monteiro e Rolando (2020) — e-book</p>
+        <div class="actions">
+          <a class="btn" href="https://drive.google.com/file/d/1w-WwlZwmg77VOo-YFZ21ZIhMpiyuTYel/view" target="_blank" rel="noopener">
+            <span class="tag link">LINK</span> Abrir no Google Drive
           </a>
         </div>
       </section>
